@@ -88,7 +88,7 @@ namespace KirtanSohila
             String s = (String)(((Label)sender).Content);
             Label label = ((Label)this.FindName("dictionaryLabel"));
             Word w = dic.GetDef(s);
-            label.Content += w.Gurmukhi + "," + 
+            label.Content = w.Gurmukhi + "," + 
                 w.Trans + "," + w.Eng + "," + w.Def;
         }
 

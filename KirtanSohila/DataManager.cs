@@ -22,19 +22,9 @@ namespace KirtanSohila
                 SQLiteConnection.CreateFile("MyDatabase.sqlite");
                 dbConnection = new SQLiteConnection(conn);
                 dbConnection.Open();
-
-                sql = "create table DICTIONARY (gurmukhi varchar(20), trans varchar(20)," +
-                    "eng varchar(20), def varchar(50))";
-
-                command = new SQLiteCommand(sql, dbConnection);
+                string script = File.ReadAllText("setupdb.sql");
+                command = new SQLiteCommand(script, dbConnection);
                 command.ExecuteNonQuery();
-
-                sql = "insert into dictionary (gurmukhi, trans,eng,def) values" +
-                    "('ਸੋਹਿਲਾ','Sohilā','Song of praise', 'Refers to the song of praise')";
-
-                command = new SQLiteCommand(sql, dbConnection);
-                command.ExecuteNonQuery();
-
                 dbConnection.Close();
             }
         }
@@ -47,13 +37,11 @@ namespace KirtanSohila
             }
         }
 
-        public bool GetDef(string gurmukhi, out  string trans, out string eng, out string def)
+        public bool GetDef(string gurmukhi, List<string> trans, List<string> eng)
         {
             bool found = false;
-            trans = "";
-            eng = "";
-            def = "";
-            {         
+           
+                     
                 using (SQLiteConnection myConnection = new SQLiteConnection(conn))
                 {
                     string oString = "Select * from DICTIONARY where gurmukhi=@fName";
@@ -64,17 +52,18 @@ namespace KirtanSohila
                     {
                         while (oReader.Read())
                         {
-                            trans = oReader["trans"].ToString();
-                            eng = oReader["eng"].ToString();
-                            def = oReader["def"].ToString();
+                            trans.Add(oReader["trans"].ToString());
+                            eng.Add(oReader["eng"].ToString());
                             found = true;
                         }
                         myConnection.Close();
                     }
                 }
-            }
+            
             return found;
         }
+
+
         
     }
 }

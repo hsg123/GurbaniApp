@@ -10,14 +10,21 @@ namespace KirtanSohila
     {
         private DataManager dm = DataManager.Instance;
 
-        public Word GetDef(String gurmukhi)
+        public List<Word> GetDef(String gurmukhi)
         {
-            String eng, trans, def; 
-            bool found = dm.GetDef(gurmukhi, out trans, out eng, out def);
-            if (found)
-                return new Word(gurmukhi, trans, eng, def);
+            List<String> eng = new List<string>();
+            List<String> trans = new List<string>();
+            List<Word> words = new List<Word>();
+            bool found = dm.GetDef(gurmukhi, trans, eng);
+            if (found) { 
+                for(int i = 0; i < eng.Count; i++)
+                {
+                    words.Add(new Word(gurmukhi, trans[i], eng[i]));
+                }
+                return words;
+            }
             else
-                return new Word(gurmukhi, trans, eng, "Could not be found");
+                return null;
         }
     }
 }

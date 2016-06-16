@@ -63,8 +63,7 @@ namespace KirtanSohila
                 {
                     l = new Label();
                     l.MouseEnter += new MouseEventHandler(mouse_Enter);
-                    //l.Padding = new Thickness(0);
-                    //l.Margin = new Thickness(0);
+                    l.Padding = new Thickness(4, 0, 4, 0);
                     l.Content = word;
                     pw.Children.Add(l);
                 }
@@ -86,10 +85,21 @@ namespace KirtanSohila
         void mouse_Enter(object sender, EventArgs e)
         {
             String s = (String)(((Label)sender).Content);
-            Label label = ((Label)this.FindName("dictionaryLabel"));
-            Word w = dic.GetDef(s);
-            label.Content = w.Gurmukhi + "," + 
-                w.Trans + "," + w.Eng + "," + w.Def;
+            RichTextBox label = ((RichTextBox)this.FindName("dictionaryLabel"));
+            List<Word> w = dic.GetDef(s);
+            label.Document.Blocks.Clear();
+            if (w != null)
+            {
+                foreach( Word word in w){
+                    label.Document.Blocks.Add(new Paragraph(new Run(word.Gurmukhi + "," +
+                    word.Trans + "," + word.Eng + "," +
+                    Environment.NewLine + Environment.NewLine)));
+                }
+            }else
+            {
+                label.Document.Blocks.Add(new Paragraph(new Run("Defintion not found in dictionary")));
+            }
+            
         }
 
 

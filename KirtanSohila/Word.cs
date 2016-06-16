@@ -9,17 +9,15 @@ namespace KirtanSohila
     class Word
     {
         private string gurmukhi;
-        private string def;
         private string eng;
         private string trans;
 
         
-        public Word(string gurmukhi, string trans, string eng, string def)
+        public Word(string gurmukhi, string trans, string eng)
         {
             Gurmukhi = gurmukhi;
             Trans = trans;
             Eng = eng;
-            Def = def;
         }
 
         public string Gurmukhi
@@ -35,18 +33,6 @@ namespace KirtanSohila
             }
         }
 
-        public string Def
-        {
-            get
-            {
-                return def;
-            }
-
-            private set
-            {
-                def = value;
-            }
-        }
 
         public string Eng
         {

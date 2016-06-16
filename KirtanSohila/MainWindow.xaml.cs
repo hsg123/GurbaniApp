@@ -25,8 +25,10 @@ namespace KirtanSohila
         //private WrapPanel p;
         private StackPanel p;
         private Label l;
+        private Dictionary dic;
         public MainWindow()
         {
+            dic = new Dictionary();
             InitializeComponent();
             gBani = new List<string>();
             tBani = new List<string>(); 
@@ -35,7 +37,6 @@ namespace KirtanSohila
             FileReader f = new FileReader();
             f.GetContent(gBani, tBani, eBani);
             setGui();
-            int i = 0;
         }
 
         public void setGui() {
@@ -80,16 +81,15 @@ namespace KirtanSohila
                 l.Margin = new Thickness(0);
                 p.Children.Add(l);
             }
-               
-           
-
         }
 
         void mouse_Enter(object sender, EventArgs e)
         {
             String s = (String)(((Label)sender).Content);
             Label label = ((Label)this.FindName("dictionaryLabel"));
-            label.Content += s;
+            Word w = dic.GetDef(s);
+            label.Content += w.Gurmukhi + "," + 
+                w.Trans + "," + w.Eng + "," + w.Def;
         }
 
 

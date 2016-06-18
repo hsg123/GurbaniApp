@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KirtanSohila"
         mc:Ignorable="d"
-        Title="MainWindow" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}">
-    <Grid>
+        Title="MainWindow" Width="1420">
+    <Grid Margin="0,0,366,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="51*"/>
             <ColumnDefinition Width="466*"/>
@@ -14,9 +14,9 @@
         <ScrollViewer  HorizontalScrollBarVisibility="Auto" Margin="10,10,714,-10" Grid.ColumnSpan="2">
             <StackPanel x:Name="gurbaniPanel" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
         </ScrollViewer>
-        <TabControl Grid.Column="1" Margin="725,10,10,-10">
+        <TabControl Grid.Column="1" Margin="180,-2,555,2">
             <TabItem Header="Dictionary">
-                <RichTextBox x:Name="dictionaryLabel" Margin="0,2,-20,-2" RenderTransformOrigin="0.5,0.5" >
+                <RichTextBox x:Name="dictionaryLabel" Margin="10,8,-30,-8" RenderTransformOrigin="0.5,0.5" >
                     <FlowDocument>
                         <Paragraph>
                             <InlineUIContainer>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,6 +28,7 @@ namespace KirtanSohila
         private StackPanel p;
         private Label l;
         private Dictionary dic;
+        private WMPLib.WindowsMediaPlayer wPlayer;
         public MainWindow()
         {
             dic = new Dictionary();
@@ -35,6 +38,7 @@ namespace KirtanSohila
             eBani = new List<string>();
             p = ((StackPanel)this.FindName("gurbaniPanel"));
             FileReader f = new FileReader();
+            wPlayer = new WMPLib.WindowsMediaPlayer();
             f.GetContent(gBani, tBani, eBani);
             setGui();
         }
@@ -43,17 +47,14 @@ namespace KirtanSohila
 
             for (int i = 0; i < gBani.Count; i++)
             {
-                addLabel(gBani[i],false,true);
-                addLabel(tBani[i],false,false);
-                addLabel(eBani[i],true,false);
+                addLabel(gBani[i],false,true,i);
+                addLabel(tBani[i],false,false,i);
+                addLabel(eBani[i],true,false,i);
             }
             
         }
 
-        public void addLabel(String content, bool eng, bool gurmukhi) {
-
-        
-          
+        public void addLabel(String content, bool eng, bool gurmukhi,int index) {
             if (gurmukhi)
             {
                 WrapPanel pw = new WrapPanel();
@@ -63,7 +64,9 @@ namespace KirtanSohila
                 {
                     l = new Label();
                     l.MouseEnter += new MouseEventHandler(mouse_Enter);
+                    l.MouseDown += new MouseButtonEventHandler(mouse_Down);
                     l.Padding = new Thickness(4, 0, 4, 0);
+                    l.Tag = index.ToString();
                     l.Content = word;
                     pw.Children.Add(l);
                 }
@@ -100,6 +103,17 @@ namespace KirtanSohila
                 label.Document.Blocks.Add(new Paragraph(new Run("Defintion not found in dictionary")));
             }
             
+        }
+        
+        void mouse_Down(object sender, EventArgs e)
+        {
+            //String word = (String)(((Label)sender).Content);
+            String line = (String)(((Label)sender).Tag);
+            if (File.Exists(@"soundFiles\" + line + ".mp3"))
+            {
+                wPlayer.URL = @"soundFiles\" + line + ".mp3";
+                wPlayer.controls.play();
+            }
         }
 
 
